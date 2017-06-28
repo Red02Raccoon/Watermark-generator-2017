@@ -18,7 +18,7 @@
           <div class="watermark">
             <h2 class="watermark__title">Генератор водяных знаков</h2>
             <div class="watermark__area">
-              <canvas class="watermark__canvas"></canvas>
+              <canvas class="watermark__canvas" style="width: 100%; height: 100%"></canvas>
             </div>
           </div>
         </div>
@@ -33,7 +33,8 @@
                     <label class="settings__item">
                       <span class="settings__text">Исходное изображение</span>
                       <input type="text" class="settings__input" name="mainpicture" placeholder="Изображение отсутствует">
-                      <a href="#" class="settings__button">                        
+                      <a href="#" class="settings__button"> 
+                       <input type="file" id="fileToChange" class="settings__input--hidden" name="mainpicture">                       
                       </a>
                     </label>
                   </div>     
@@ -42,7 +43,8 @@
                     <label class="settings__item">
                       <span class="settings__text">Водяной знак</span>
                       <input type="text" class="settings__input" name="wmarkpicture" placeholder="Изображение отсутствует">
-                      <a href="#" class="settings__button">                        
+                      <a href="#" class="settings__button">  
+                      <input type="file" id="fileToTop" class="settings__input--hidden" name="mainpicture" onclick="return false">                        
                       </a>
                     </label>
                   </div>
