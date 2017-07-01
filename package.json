@@ -1,0 +1,21 @@
+{
+  "name": "wmg",
+  "version": "1.0.0",
+  "description": "watermarkGenerator",
+  "main": "\u001b[D\u001b[D\u001b[D\u001bmain",
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Red02Raccoon/Watermark-generator-2017.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Red02Raccoon/Watermark-generator-2017/issues"
+  },
+  "homepage": "https://github.com/Red02Raccoon/Watermark-generator-2017#readme"
+}
