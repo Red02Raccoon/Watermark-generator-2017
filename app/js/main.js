@@ -1,14 +1,18 @@
+let $mainFileInput = $('#fileToChange'),
+    $markFileInput = $('#fileToTop'),
+    $resetBtn = $('.button-reset'),
+    $mainImgPrev = $('.main-img-prev');
+
 function pushImg_1(evt) {
-    var file = document.querySelector('#fileToChange').files[0];
-		read(file, 300, 300);
-    	document.getElementById('fileToTop').setAttribute('onclick', 'return true');
+    var file = $mainFileInput[0].files[0];
+    setImage(file, 300, 300);
+        $markFileInput[0].setAttribute('onclick', 'return true');
  };
 
  function pushImg_2(evt) {
-    var file = document.querySelector('#fileToTop').files[0];
-   		read(file, 200, 200);
+     var file = document.querySelector('#fileToTop').files[0];
+     setImage(file, 200, 200);
  };
-
 
  function read(file, width, height) {
  		var  reader = new FileReader();
@@ -26,7 +30,6 @@ function pushImg_1(evt) {
     	};
     	reader.readAsDataURL(file);
  };
-
 
 
 if (window.File && window.FileReader && window.FileList && window.Blob) {
@@ -63,9 +66,9 @@ function dragOverHandler (e){
 function dragleaveHandler(e) {
     e.stopPropagation();
     e.preventDefault();
-    console.log('dragleave');
+
     if (isDragging) {
-        console.log('dragleave1');
+
         fileUploadContainer.removeClass(dragOverClass);
         isDragging = false;
     }
@@ -98,20 +101,18 @@ function dropSelectFile(files){
 };
 
 function setImage(file) {
-    // $scope.files.push(file);
      var reader = new FileReader();
     reader.onload = function (e) {
 
         var uri = e.target.result;
 
-        let $mainImgPrev = $('.main-img-prev');
 
-        $mainImgPrev.attr("src", uri).addClass('main-img-prev_show');
 
-        // $rootScope.safeApply(function () {
-        //     $scope.previewImages.push(uri);
-        //
-        // });
+        $mainImgPrev.attr("src", uri);
+        if(!$mainImgPrev.hasClass('main-img-prev_show')){
+            $mainImgPrev.addClass('main-img-prev_show')
+        };
+
     };
 
     reader.readAsDataURL(file);
@@ -123,4 +124,16 @@ function isImageFile(file) {
     }
 
     return false;
+};
+
+$resetBtn.click(function(e){
+    resetSelection();
+});
+
+function resetSelection () {
+    $($mainImgPrev[0]).attr("src", '');
+    console.log('$mainFileInput', $mainFileInput);
+    $($mainFileInput[0]).val('');
+    $($markFileInput[0]).val('');
+    console.log('$mainFileInput', $mainFileInput);
 };
