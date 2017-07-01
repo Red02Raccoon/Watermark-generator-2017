@@ -553,6 +553,7 @@ html {
   font-weight: 100; }
 
 .watermark__area {
+  position: relative;
   height: 535px;
   overflow: hidden;
   background: #fff url("../img/bg_transparency.jpg"); }
@@ -637,6 +638,18 @@ html {
 
 .settings__button--noactive {
   background-color: #a99e9d; }
+
+.mainImgContainer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%); }
+
+.secondImgContainer {
+  position: absolute;
+  z-index: 2; }
 
 /*...от Насти*/
 .setposition__head {
