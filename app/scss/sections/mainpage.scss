@@ -139,12 +139,6 @@ html{
 	vertical-align: middle;
 }
 
-.settings__input--hidden {
-	position: absolute;
-	left: 0;
-	right: 0;
-	opacity: 0;
-}
 
 .settings__text{
 	display: inline-block;
@@ -161,6 +155,20 @@ html{
     background: #f97e76 url('../img/sprites.png') -40px -104px;
     border-radius: 0 5px 5px 0;
 }
+
+/*Привет от Насти...стили для input type = file - скрыто, но работает (для FileReader)*/
+.settings__input--hidden {
+	position: absolute;
+	left: 0;
+	right: 0;
+	opacity: 0;
+}
+
+.settings__button--noactive {
+	background-color: #a99e9d;
+}
+
+/*...от Насти*/
 
 
 .setposition__head{
