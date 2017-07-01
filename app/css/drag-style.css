@@ -1,0 +1,11 @@
+.dragover {
+    border: 2px solid #000;
+}
+
+.main-img-prev_hide {
+    display: none;
+}
+
+.main-img-prev_show {
+    display: inline-block !important;
+}

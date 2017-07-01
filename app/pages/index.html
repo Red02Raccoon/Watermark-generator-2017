@@ -1,138 +1,146 @@
 <!DOCTYPE html>
 <html lang="ru-RU">
 
-  <head>
+<head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title>Watermark generator</title>
     <link rel="stylesheet" type="text/css" href="../scss/main.css">
-  </head>
+    <link rel="stylesheet" type="text/css" href="../css/drag-style.css">
+</head>
 
 </html>
 
 <body>
-  <div class="wrapper">
+<div class="wrapper">
     <main class="main">
-      <div class="container">
-        <div class="main__leftside">
-          <div class="watermark">
-            <h2 class="watermark__title">Генератор водяных знаков</h2>
-            <div class="watermark__area">
-              <!--<canvas class="watermark__canvas" style="width: 100%; height: 100%"></canvas>-->
+        <div class="container">
+            <div class="main__leftside">
+                <div class="watermark">
+                    <h2 class="watermark__title">Генератор водяных знаков</h2>
+                    <div class="watermark__area">
+                        <img src="" alt="" class="main-img-prev main-img-prev_hide">
+                        <!--<canvas class="watermark__canvas" style="width: 100%; height: 100%"></canvas>-->
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-        <div class="main__rightside">
-          <div class="settings">
-            <h2 class="settings__title">Настройки</h2>
-              <div class="settings__area">
+            <div class="main__rightside">
+                <div class="settings">
+                    <h2 class="settings__title">Настройки</h2>
+                    <div class="settings__area">
 
-                <div class="settings__pictures">
-                  
-                  <div class="settings__mainpicture">
-                    <label class="settings__item">
-                      <span class="settings__text">Исходное изображение</span>
-                      <input type="text" class="settings__input" name="mainpicture" placeholder="Изображение отсутствует">
-                      <a href="#" class="settings__button"> 
-                       <input type="file" id="fileToChange" class="settings__input--hidden" name="mainpicture">                       
-                      </a>
-                    </label>
-                  </div>     
+                        <div class="settings__pictures">
 
-                  <div class="settings__wmarkpicture">
-                    <label class="settings__item">
-                      <span class="settings__text">Водяной знак</span>
-                      <input type="text" class="settings__input" name="wmarkpicture" placeholder="Изображение отсутствует">
-                      <a href="#" class="settings__button">  
-                      <input type="file" id="fileToTop" class="settings__input--hidden" name="mainpicture" onclick="return false">                        
-                      </a>
-                    </label>
-                  </div>
+                            <div class="settings__mainpicture">
+                                <label class="settings__item">
+                                    <span class="settings__text">Исходное изображение</span>
+                                    <input type="text" class="settings__input" name="mainpicture"
+                                           placeholder="Изображение отсутствует">
+                                    <a href="#" class="settings__button">
+                                        <input type="file" id="fileToChange" class="settings__input--hidden"
+                                               name="mainpicture">
+                                    </a>
+                                </label>
+                            </div>
 
-                </div>
+                            <div class="settings__wmarkpicture">
+                                <label class="settings__item">
+                                    <span class="settings__text">Водяной знак</span>
+                                    <input type="text" class="settings__input" name="wmarkpicture"
+                                           placeholder="Изображение отсутствует">
+                                    <a href="#" class="settings__button">
+                                        <input type="file" id="fileToTop" class="settings__input--hidden"
+                                               name="mainpicture" onclick="return false">
+                                    </a>
+                                </label>
+                            </div>
 
-                <div class="settings__position">
-                  <div class="setposition">
-
-                    <div class="setposition__head">
-                      <div class="setposition__title">Положение</div>
-                      <div class="setposition__switcher">
-                        <a href="#" class="setposition__item setposition__item-one"></a>
-                        <a href="#" class="setposition__item setposition__item-many"></a>
-                      </div>                      
-                    </div>
-
-
-                    <div class="setposition__adjustment"> 
-                        <div class="sectors">
-                          <a href="#" class="sectors__item"></a>
-                          <a href="#" class="sectors__item"></a>
-                          <a href="#" class="sectors__item"></a>
-                          <a href="#" class="sectors__item"></a>
-                          <a href="#" class="sectors__item"></a>
-                          <a href="#" class="sectors__item"></a>
-                          <a href="#" class="sectors__item"></a>
-                          <a href="#" class="sectors__item"></a>
-                          <a href="#" class="sectors__item"></a>
                         </div>
+
+                        <div class="settings__position">
+                            <div class="setposition">
+
+                                <div class="setposition__head">
+                                    <div class="setposition__title">Положение</div>
+                                    <div class="setposition__switcher">
+                                        <a href="#" class="setposition__item setposition__item-one"></a>
+                                        <a href="#" class="setposition__item setposition__item-many"></a>
+                                    </div>
+                                </div>
+
+
+                                <div class="setposition__adjustment">
+                                    <div class="sectors">
+                                        <a href="#" class="sectors__item"></a>
+                                        <a href="#" class="sectors__item"></a>
+                                        <a href="#" class="sectors__item"></a>
+                                        <a href="#" class="sectors__item"></a>
+                                        <a href="#" class="sectors__item"></a>
+                                        <a href="#" class="sectors__item"></a>
+                                        <a href="#" class="sectors__item"></a>
+                                        <a href="#" class="sectors__item"></a>
+                                        <a href="#" class="sectors__item"></a>
+                                    </div>
+                                </div>
+
+                                <div class="setposition__coord">
+                                    <div class="setposition__block">
+                                        <div class="coordinates__text">X</div>
+                                        <input type="text" class="coordinates__input">
+                                        <a class="coordinates__link coordinates__link-up" href="#">
+                                            <span class="coordinates__symbol coordinates__symbol-up"></span>
+                                        </a>
+                                        <a class="coordinates__link coordinates__link-down" href="#">
+                                            <span class="coordinates__symbol coordinates__symbol-down"></span>
+                                        </a>
+                                    </div>
+                                    <div class="setposition__block setposition__block-bottom">
+                                        <div class="coordinates__text">Y</div>
+                                        <input type="text" class="coordinates__input">
+                                        <a class="coordinates__link coordinates__link-up" href="#">
+                                            <span class="coordinates__symbol coordinates__symbol-up"></span>
+                                        </a>
+                                        <a class="coordinates__link coordinates__link-down" href="#">
+                                            <span class="coordinates__symbol coordinates__symbol-down"></span>
+                                        </a>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="settings__transparency">
+                            <div class="transparency">
+                                <div class="transparency__title">Прозрачность</div>
+                                <div class="transparency__level">
+                                    <div class="transparency__circlebutton"></div>
+                                    <div class="transparency__line"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="buttons">
+                            <button class="button button-reset">Сброс</button>
+                            <button class="button button-download">Скачать</button>
+                        </div>
+
                     </div>
-
-                    <div class="setposition__coord">
-                      <div class="setposition__block">
-                        <div class="coordinates__text">X</div>
-                        <input type="text" class="coordinates__input">
-                          <a class="coordinates__link coordinates__link-up" href="#">
-                            <span class="coordinates__symbol coordinates__symbol-up"></span>
-                          </a>                          
-                          <a class="coordinates__link coordinates__link-down" href="#">
-                            <span class="coordinates__symbol coordinates__symbol-down"></span>
-                          </a>
-                      </div>
-                      <div class="setposition__block setposition__block-bottom">
-                        <div class="coordinates__text">Y</div>
-                        <input type="text" class="coordinates__input">
-                          <a class="coordinates__link coordinates__link-up" href="#">
-                            <span class="coordinates__symbol coordinates__symbol-up"></span>
-                          </a>                          
-                          <a class="coordinates__link coordinates__link-down" href="#">
-                            <span class="coordinates__symbol coordinates__symbol-down"></span>
-                          </a>
-                      </div>
-                    </div>
-
-                  </div>
                 </div>
-
-                <div class="settings__transparency">
-                  <div class="transparency">
-                    <div class="transparency__title">Прозрачность</div>
-                    <div class="transparency__level">
-                      <div class="transparency__circlebutton"></div>
-                      <div class="transparency__line"></div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="buttons">
-                  <button class="button button-reset">Сброс</button>
-                  <button class="button button-download">Скачать</button>
-                </div>
-
-              </div>
-          </div>
+            </div>
         </div>
-      </div>
     </main>
 
     <aside class="aside">
-      
+
     </aside>
 
     <footer class="footer">
-      <div class="container">
-        <div class="footer__text">© 2017, Это наш сайт, пожалуйста, не копируйте и не воруйте его</div>
-      </div>
+        <div class="container">
+            <div class="footer__text">© 2017, Это наш сайт, пожалуйста, не копируйте и не воруйте его</div>
+        </div>
     </footer>
-  </div>  
+</div>
+
+<script src="../../bower_components/jquery/dist/jquery.js"></script>
 <script src="../js/main.js"></script>
 </body>
