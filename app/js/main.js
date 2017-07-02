@@ -5,7 +5,6 @@
 		justforme = document.querySelector('.justforme'),
 		justformePic = document.querySelector('.justformepic'),
 		isred = false,
-		lineW = 0, 
 		startX = 0, 
 		deltaX = 0, 
 		dragX = 0, 
@@ -13,20 +12,28 @@
 		newCoord = 0,	//координата мыши при перемещении кругляшка
 		dragCoord = 0;	//запоминаем положение кругляшка 
 
-	const firstButtonShift = Math.abs(getComputedStyle(circlebutton).left.slice(0,-2));	//первоначальный отриц.сдвиг кругляшка на линии
+	const FIRSTBUTTONSHIFT = Math.abs(getComputedStyle(circlebutton).left.slice(0,-2)),	//первоначальный отриц.сдвиг кругляшка на линии
+		  LINEWIDTH = getComputedStyle(line).width.slice(0,-2);
 
-	lineW = getComputedStyle(line).width.slice(0,-2);
+	function makeOpacity (newCoord) {
+		circlebutton.style.left = newCoord - FIRSTBUTTONSHIFT +'px';
+		let opacity = Math.round(newCoord/LINEWIDTH*100);
+		justforme.innerHTML = opacity+'%';
+		justformePic.style.opacity = (100 - opacity)/100;		
+	}
+
 
 	//нажали мышью на кругляшок
 	let buttonDown = function (e) {
 		e.preventDefault();
 		this.style.backgroundColor = '#9eb2c0';
-		startX = e.pageX;							//координата документа, куда кликнули мышью
+		startX = e.pageX;												//координата документа, куда кликнули мышью
 		scrollX = window.pageXOffset;
 		deltaX = this.getBoundingClientRect().left - startX + scrollX ; //разница м/у тем,куда ткнули мышкой и левой стороной элемента (кругляшка)
 
 		isred = true;
 	};
+
 	//отпустили кругляшок
 	let buttonUp = function (e) {
 		e.preventDefault();
@@ -38,6 +45,7 @@
 			isred = false;
 		};		
 	};
+
 	//тащим нажатый кругляшок
 	let buttonDrag = function (e) {
 		e.preventDefault();		
@@ -47,20 +55,18 @@
 			dragX = e.pageX;
 			
 			switch (true) {
-				case (dragX - startX + dragCoord < lineW && dragX - startX + dragCoord > 0): 	
+				case (dragX - startX + dragCoord < LINEWIDTH && dragX - startX + dragCoord > 0): 	
 					newCoord = (dragCoord + dragX - startX );
 				break;
-				case (dragX - startX + dragCoord >= lineW): 	
-					newCoord = lineW;
+				case (dragX - startX + dragCoord >= LINEWIDTH): 	
+					newCoord = LINEWIDTH;
 				break;
 				case (dragX - startX + dragCoord <= 0): 	
 					newCoord = 0;
 				break;
 			}
-			circlebutton.style.left = newCoord - firstButtonShift +'px';
-			let opacity = Math.round(newCoord/lineW*100);
-			justforme.innerHTML = opacity+'%';
-			justformePic.style.opacity = (100 - opacity)/100;
+
+			makeOpacity (newCoord);
 		};		
 	};	
 
@@ -69,18 +75,12 @@
 		e.preventDefault();		
 
 			let clickX = e.pageX,
-				buttonCenter = circlebutton.getBoundingClientRect().left + firstButtonShift,
+				buttonCenter = circlebutton.getBoundingClientRect().left + FIRSTBUTTONSHIFT,
 				scrollX = window.pageXOffset;				
 
 			newCoord = +dragCoord+clickX-buttonCenter+scrollX;
-			
-			circlebutton.style.left = newCoord - firstButtonShift +'px';
-			let opacity = Math.round(newCoord/lineW*100);
-			justforme.innerHTML = opacity+'%';
-			justformePic.style.opacity = (100 - opacity)/100;
-
+			makeOpacity (newCoord);
 			dragCoord = newCoord;
-
 	};
 
 
