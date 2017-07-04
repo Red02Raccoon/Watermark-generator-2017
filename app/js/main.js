@@ -1,5 +1,7 @@
 (function(){
 
+	'use strict';
+
 	let circlebutton = document.querySelector('.transparency__circlebutton'), 
 		line = document.querySelector('.transparency__line'),
 		justforme = document.querySelector('.justforme'),
@@ -26,7 +28,7 @@
 	//нажали мышью на кругляшок
 	let buttonDown = function (e) {
 		e.preventDefault();
-		this.style.backgroundColor = '#9eb2c0';
+		this.classList.add('transparency__circlebutton-orange');
 		startX = e.pageX;												//координата документа, куда кликнули мышью
 		scrollX = window.pageXOffset;
 		deltaX = this.getBoundingClientRect().left - startX + scrollX ; //разница м/у тем,куда ткнули мышкой и левой стороной элемента (кругляшка)
@@ -42,6 +44,7 @@
 		else {
 			circlebutton.style.backgroundColor = '#dbe1e8';
 			dragCoord = newCoord;
+			circlebutton.classList.remove('transparency__circlebutton-orange');
 			isred = false;
 		};		
 	};
@@ -74,13 +77,17 @@
 	let lineClick = function (e) {
 		e.preventDefault();		
 
+			circlebutton.classList.add('transparency__circlebutton-orange');
+
 			let clickX = e.pageX,
 				buttonCenter = circlebutton.getBoundingClientRect().left + FIRSTBUTTONSHIFT,
 				scrollX = window.pageXOffset;				
 
-			newCoord = +dragCoord+clickX-buttonCenter+scrollX;
+			newCoord = +dragCoord+clickX-buttonCenter-scrollX;
 			makeOpacity (newCoord);
 			dragCoord = newCoord;
+
+			setTimeout(circlebutton.classList.remove('transparency__circlebutton-orange'), 3000);
 	};
 
 
