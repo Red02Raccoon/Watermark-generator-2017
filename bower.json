@@ -1,0 +1,20 @@
+{
+  "name": "watermark",
+  "description": "watermarkGenerator",
+  "main": "\u001b[D\u001b[D\u001b[D\u001bmain",
+  "authors": [
+    "dobro@topdetal.com.ua"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/Red02Raccoon/Watermark-generator-2017",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^3.2.1"
+  }
+}
