@@ -4,6 +4,7 @@
 
 	let circlebutton = document.querySelector('.transparency__circlebutton'), 
 		line = document.querySelector('.transparency__line'),
+		darkline = document.querySelector('.transparency__darkline'),
 		justforme = document.querySelector('.justforme'),
 		justformePic = document.querySelector('.justformepic'),
 		isred = false,
@@ -20,6 +21,7 @@
 	function makeOpacity (newCoord) {
 		circlebutton.style.left = newCoord - FIRSTBUTTONSHIFT +'px';
 		let opacity = Math.round(newCoord/LINEWIDTH*100);
+		darkline.style.width = opacity + '%';
 		justforme.innerHTML = opacity+'%';
 		justformePic.style.opacity = (100 - opacity)/100;		
 	}
@@ -87,7 +89,9 @@
 			makeOpacity (newCoord);
 			dragCoord = newCoord;
 
-			setTimeout(circlebutton.classList.remove('transparency__circlebutton-orange'), 3000);
+			setTimeout(function(){
+                    circlebutton.classList.remove('transparency__circlebutton-orange')
+                },100);
 	};
 
 
