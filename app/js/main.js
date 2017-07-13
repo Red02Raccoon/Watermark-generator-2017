@@ -27,6 +27,9 @@
 				e.target.classList.add('setposition__item-active');
 
 				clickMany = 1;
+				PicAmount = 1;
+				waterPictures.style.width = 100 +'%';	
+				waterPictures.style.height = 100 +'%';
 
 				let newPics = document.querySelectorAll('.justformepic-new');
 				for (let i=0; i<newPics.length; i++) {
@@ -36,8 +39,10 @@
 
 			if (areaRatio > picturesRatio) {
 				justformePic.style.height = '100%';
+				justformePic.style.width = '';
 			} else {
 				justformePic.style.width = '100%';
+				justformePic.style.height = '';
 			};
 				
 		};
@@ -49,7 +54,9 @@
 			e.preventDefault();		
 
 				setPosOne.classList.remove('setposition__item-active');
-				e.target.classList.add('setposition__item-active');				
+				e.target.classList.add('setposition__item-active');			
+				justformePic.style.height = '';
+				justformePic.style.width = '';	
 
 				clickMany += 1;//колво кликов по many = кол-во водяных картинок в ширину
 
@@ -59,7 +66,7 @@
 
 				let addPicAmount = rowAmount*clickMany-PicAmount;
 
-				console.log(wPic, hPic, rowAmount, addPicAmount);
+				//console.log(wPic, hPic, rowAmount, addPicAmount);
 
 				for (let i=0; i<addPicAmount; i++) {
 					let newPic = justformePic.cloneNode(true);
