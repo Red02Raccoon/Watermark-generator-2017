@@ -6,7 +6,7 @@
 	let justformePic = document.querySelector('.justformepic'),
 		waterArea = document.querySelector('.watermark__area'),
 		setPosMany = document.querySelector('.setposition__item-many'),
-		clickMany = 1,
+		clickMany = 1, PicAmount = 1,
 		setPosOne = document.querySelector('.setposition__item-one'),
 		waterPictures = document.querySelector('.watermark__waterpictures'),
 		wArea = getComputedStyle(waterArea).width.slice(0,-2),
@@ -57,7 +57,9 @@
 				hPic = wPic * picturesRatio;//новая высота водяной картинки
 				let rowAmount = hArea/hPic - Math.floor(hArea/hPic) > 0 ? Math.floor(hArea/hPic)+1 : Math.floor(hArea/hPic);//количество строк,чтобы заполнить всю картинку
 
-				let addPicAmount = rowAmount*clickMany-1;
+				let addPicAmount = rowAmount*clickMany-PicAmount;
+
+				console.log(wPic, hPic, rowAmount, addPicAmount);
 
 				for (let i=0; i<addPicAmount; i++) {
 					let newPic = justformePic.cloneNode(true);
@@ -66,16 +68,16 @@
 				};
 
 				let justformeAllPic = document.querySelectorAll('.justformepic');
-
-			if (areaRatio > picturesRatio) {
-				for (let i=0; i<justformeAllPic.length; i++) {
- 					justformeAllPic[i].style.height = 100/clickMany+'%';
-				}							
-			} else {
-				for (let i=0; i<justformeAllPic.length; i++) {
+				PicAmount = justformeAllPic.length;
+			// if (areaRatio > picturesRatio) {
+			// 	for (let i=0; i<justformeAllPic.length; i++) {
+ 		// 			justformeAllPic[i].style.height = 100/clickMany+'%';
+			// 	}							
+			// } else {
+				for (let i=0; i<PicAmount; i++) {
  					justformeAllPic[i].style.width = 100/clickMany+'%';
 				}
-			}
+			//}
 				waterPictures.style.width = getComputedStyle(justformeAllPic[0]).width.slice(0,-2)*clickMany+'px';	
 				waterPictures.style.height = getComputedStyle(justformeAllPic[0]).height.slice(0,-2)*rowAmount+'px';
 		};
