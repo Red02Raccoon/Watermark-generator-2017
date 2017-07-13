@@ -532,8 +532,19 @@ html {
 
 .watermark__area {
   height: 535px;
+  width: 618px;
+  margin: 0 auto;
   overflow: hidden;
-  background: #fff url("../img/bg_transparency.jpg"); }
+  background: #fff url("../img/bg_transparency.jpg");
+  position: relative; }
+
+.watermark__waterpictures {
+  position: absolute;
+  font-size: 0px;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%; }
 
 .main__rightside {
   background: #f1f1f5;
@@ -616,19 +627,19 @@ html {
   width: 75%; }
 
 .setposition__item {
-  width: 20px;
-  height: 20px;
+  width: 22px;
+  height: 22px;
   display: inline-block;
   background: url("../img/sprites.png") no-repeat; }
   .setposition__item-one {
     background-position: -105px -92px;
     margin-right: 5px; }
-    .setposition__item-one:hover {
+    .setposition__item-one:hover, .setposition__item-one.setposition__item-active {
       background-position: -105px -115px; }
   .setposition__item-many {
     background-position: -105px -138px; }
-    .setposition__item-many:hover {
-      background-position: -105px -161px; }
+    .setposition__item-many:hover, .setposition__item-many.setposition__item-active {
+      background-position: -105px -162px; }
 
 .setposition__adjustment {
   width: 60%;
@@ -768,12 +779,7 @@ html {
   left: 0; }
 
 .justformepic {
-  position: absolute;
-  top: -24px;
-  right: 0;
-  width: 50px;
-  height: 70px;
-  background-image: url("../img/forme.jpg");
-  background-size: cover; }
+  vertical-align: top;
+  display: inline-block; }
 
 /*# sourceMappingURL=main.css.map */

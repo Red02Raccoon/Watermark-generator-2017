@@ -61,15 +61,23 @@ html{
 }
 .watermark__area{
 	height: 535px;
+	width: 618px;
+	margin: 0 auto;
 	overflow: hidden;
 	background: #fff url('../img/bg_transparency.jpg');
+	position: relative;
+}
+
+.watermark__waterpictures{
+	position: absolute;
+	font-size: 0px;
+	top: 0; left: 0;
+	width: 100%;height: 100%;
 }
 
 .main__rightside{
 	background: #f1f1f5;
 	width: 30%;
-
-
 }
 	
 .settings{	
@@ -169,8 +177,8 @@ html{
 }
 
 .setposition__item{
-	width: 20px;
-    height: 20px;
+	width: 22px;
+    height: 22px;
     display: inline-block;
     background: url('../img/sprites.png') no-repeat;
 
@@ -178,15 +186,15 @@ html{
 		    background-position: -105px -92px;
 		    margin-right: 5px;
 
-	    	&:hover{
+	    	&:hover, &.setposition__item-active{
 	    		background-position: -105px -115px;
 	    	}
 		}
 	&-many{	
 	    	background-position: -105px -138px;
 
-	    	&:hover{
-	    		background-position: -105px -161px;
+	    	&:hover, &.setposition__item-active{
+	    		background-position: -105px -162px;
 	    	}
 		}
 
@@ -361,12 +369,14 @@ html{
 	left: 0;
 }
 
+
+
 .justformepic{
-	position: absolute;
-	top: -24px;
-	right: 0;
-	width: 50px;
-	height: 70px;
-	background-image: url('../img/forme.jpg');
-	background-size: cover;
+vertical-align: top;
+// position: absolute;
+display: inline-block;
+	// top: -24px;right: 0; width: 50px; height: 70px;
+	// background-image: url('../img/forme.jpg');
+	// background-repeat: no-repeat;
+	// background-size: contain;
 }
