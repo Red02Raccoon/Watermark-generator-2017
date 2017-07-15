@@ -1,7 +1,7 @@
-let $mainFileInput = $('#fileToChange'),
+export let $mainFileInput = $('#fileToChange'),
     $mainImgPrev = $('.main-img-prev'),
-    $markFileInput = $('#fileToTop');
-    export let $resetBtn = $('.button-reset');
+    $markFileInput = $('#fileToTop'),
+    $resetBtn = $('.button-reset');
     
 
 function pushImg_1(evt) {
@@ -15,13 +15,13 @@ function pushImg_1(evt) {
      setImage(file, 200, 200);
  };
 
- export function read(file, width, height) {
- 		var  reader = new FileReader();
+ export function setImage(file, width, height) {
+ 		var reader = new FileReader();
 
     	reader.onload = function(event) {
     		var dataURI = event.target.result,
     		    canvas = document.querySelector('.watermark__canvas'),
-    			ctx = canvas.getContext('2d'),
+    		    ctx = canvas.getContext('2d'),
     			img = new Image();
 
 			img.onload = function(){
@@ -29,7 +29,7 @@ function pushImg_1(evt) {
 			};
 			img.src = dataURI;
 			
-			$mainImgPrev.attr("src", uri);
+			$mainImgPrev.attr("src", dataURI);
             if(!$mainImgPrev.hasClass('main-img-prev_show')){
                 $mainImgPrev.addClass('main-img-prev_show')
             };

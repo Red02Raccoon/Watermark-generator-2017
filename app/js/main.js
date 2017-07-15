@@ -4,7 +4,9 @@
 
 //////
 
-import {$resetBtn} from '../src/js/modules/nastya/nastya'
+import {$resetBtn} from '../src/js/modules/get-file-form/get-file-form'
+
+console.log('$resetBtn', $resetBtn);
 
 let $globalArea = $('.watermark__area'),
     fileUploadContainer = $('.watermark__area'),

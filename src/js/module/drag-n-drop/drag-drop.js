@@ -1,9 +1,8 @@
 
-import {$resetBtn} from '../src/js/modules/nastya/nastya';
-
-
-
-console.log('$resetBtn', $resetBtn);
+import {setImage} from "./module/get-file-form/get-file-form";
+import {$resetBtn} from './module/get-file-form/get-file-form';
+import {reset} from './module/reset/reset';
+    
 
 let $globalArea = $('.watermark__area'),
     fileUploadContainer = $('.watermark__area'),
@@ -54,48 +53,21 @@ function dropSelectFile(files){
     if (files && files[0]) {
         for (var i = 0; i < files.length; i++) {
             if (isImageFile(files[i])) {
-                var file = files[i];
-
-                setImage(file);
+                setImage(files[i]);
             }
         }
     }
-};
-
-
-
-function setImage(file) {
-     var reader = new FileReader();
-    reader.onload = function (e) {
-
-        var uri = e.target.result;
-
-        $mainImgPrev.attr("src", uri);
-        if(!$mainImgPrev.hasClass('main-img-prev_show')){
-            $mainImgPrev.addClass('main-img-prev_show')
-        };
-
-    };
-
-    reader.readAsDataURL(file);
 };
 
 function isImageFile(file) {
     if (file.type.indexOf('image/') === 0) {
         return true
     }
-
     return false;
 };
 
 $resetBtn.click(function(e){
-    resetSelection();
+    reset();
 });
 
-function resetSelection () {
-    $($mainImgPrev[0]).attr("src", '');
-    console.log('$mainFileInput', $mainFileInput);
-    $($mainFileInput[0]).val('');
-    $($markFileInput[0]).val('');
-    console.log('$mainFileInput', $mainFileInput);
-};
+

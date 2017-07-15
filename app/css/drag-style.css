@@ -14,3 +14,11 @@
 .main-img-prev_show {
     display: inline-block !important;
 }
+
+.water-img-prev_hide {
+    display: none;
+}
+
+.water-img-prev_show {
+    display: inline-block !important;
+}
