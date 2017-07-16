@@ -11,10 +11,6 @@ $globalArea
     .on('dragleave', dragHandlers().dragleaveHandler)
     .on('drop', dragHandlers().dropHandler);
 
-
-
-
-
 $resetBtn.click(function(e){
     reset();
 });

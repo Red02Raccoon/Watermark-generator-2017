@@ -1,5 +1,6 @@
 export let $mainFileInput = $('#fileToChange'),
     $mainImgPrev = $('.main-img-prev'),
+    $waterImagePrev = $('.water-img-prev'),
     $markFileInput = $('#fileToTop'),
     $resetBtn = $('.button-reset');
     
@@ -14,9 +15,23 @@ function pushImg_1(evt) {
      var file = document.querySelector('#fileToTop').files[0];
      setImage(file, 200, 200);
  };
-
+ 
+ export let isMainImagePresent = function(mainTrue){
+     let present = false;
+     
+     return {
+         isMainImage: function(){
+             if(mainTrue){
+                 present = true;
+             }
+             return present;
+         }
+     }
+ };
+let mainPresent = false;
  export function setImage(file, width, height) {
- 		var reader = new FileReader();
+ 		let reader = new FileReader();
+
 
     	reader.onload = function(event) {
     		var dataURI = event.target.result,
@@ -29,10 +44,21 @@ function pushImg_1(evt) {
 			};
 			img.src = dataURI;
 			
-			$mainImgPrev.attr("src", dataURI);
-            if(!$mainImgPrev.hasClass('main-img-prev_show')){
-                $mainImgPrev.addClass('main-img-prev_show')
-            };
+			
+			if(!mainPresent){
+			    $mainImgPrev.attr("src", dataURI);
+                if(!$mainImgPrev.hasClass('main-img-prev_show')){
+                    $mainImgPrev.addClass('main-img-prev_show')
+                };
+                mainPresent = true;
+			} else {
+			    $waterImagePrev.attr("src", dataURI);
+			    if(!$waterImagePrev.hasClass('water-img-prev_show')){
+                    $waterImagePrev.addClass('water-img-prev_show')
+                };
+			    
+			}
+			
         
     	};
     	reader.readAsDataURL(file);
