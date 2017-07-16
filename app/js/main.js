@@ -1,27 +1,35 @@
-//one-many
+'use strict';
+
+//one-many & X/Y
 (function(){
 
-	'use strict';
+	//'use strict';
 
 	let justformePic = document.querySelector('.justformepic'),
+		justformeAllPic = document.querySelectorAll('.justformepic'),
 		waterArea = document.querySelector('.watermark__area'),
 		setPosMany = document.querySelector('.setposition__item-many'),
 		clickMany = 1, PicAmount = 1,
 		setPosOne = document.querySelector('.setposition__item-one'),
 		waterPictures = document.querySelector('.watermark__waterpictures'),
-		wArea = getComputedStyle(waterArea).width.slice(0,-2),
-		hArea = getComputedStyle(waterArea).height.slice(0,-2),
-		wPic = getComputedStyle(justformePic).width.slice(0,-2),
-		hPic = getComputedStyle(justformePic).height.slice(0,-2);
-
-
-	let areaRatio = hArea/wArea,
-		picturesRatio = hPic/wPic;
+		wArea = 0,		hArea = 0,
+		wAllPic = 0,
+		wPic = 0,		hPic = 0,
+		areaRatio = 0, 	picturesRatio = 0,
+		inputX = document.querySelector('.coordinates__input-X'),
+		inputY = document.querySelector('.coordinates__input-Y'), 
+		valMarginRight = 0,
+		maxX = 500, maxY = 500;
 
 
 	//кликаем на one
 		let oneClick = function (e) {
-			e.preventDefault();		
+			e.preventDefault();	
+
+				wPic = getComputedStyle(justformePic).width.slice(0,-2),
+				hPic = getComputedStyle(justformePic).height.slice(0,-2),
+				picturesRatio = hPic/wPic;
+
 
 				setPosMany.classList.remove('setposition__item-active');
 				e.target.classList.add('setposition__item-active');
@@ -45,13 +53,20 @@
 				justformePic.style.height = '';
 			};
 				
-		};
-
+		}
 	
 
 	//кликаем на many
 		let manyClick = function (e) {
 			e.preventDefault();		
+
+				wArea = +getComputedStyle(waterArea).width.slice(0,-2),
+				hArea = +getComputedStyle(waterArea).height.slice(0,-2),				
+				wPic = +getComputedStyle(justformePic).width.slice(0,-2),
+				hPic = +getComputedStyle(justformePic).height.slice(0,-2),
+				wAllPic = +getComputedStyle(waterPictures).width.slice(0,-2),
+				//areaRatio = hArea/wArea,
+				picturesRatio = hPic/wPic;
 
 				setPosOne.classList.remove('setposition__item-active');
 				e.target.classList.add('setposition__item-active');			
@@ -59,14 +74,13 @@
 				justformePic.style.width = '';	
 
 				clickMany += 1;//колво кликов по many = кол-во водяных картинок в ширину
-
-				wPic = wArea/clickMany;//новая ширина водяной картинки
+console.log(wAllPic, valMarginRight, clickMany);
+				wPic = (wAllPic - valMarginRight*(clickMany-1))/clickMany;//новая ширина водяной картинки
+				//wPic = (wArea - valMarginRight/(clickMany-1))/ clickMany ;//новая ширина водяной картинки
 				hPic = wPic * picturesRatio;//новая высота водяной картинки
-				let rowAmount = hArea/hPic - Math.floor(hArea/hPic) > 0 ? Math.floor(hArea/hPic)+1 : Math.floor(hArea/hPic);//количество строк,чтобы заполнить всю картинку
+				let rowAmount = hArea / hPic - Math.floor(hArea/hPic) > 0 ? Math.floor(hArea/hPic)+1 : Math.floor(hArea/hPic);//количество строк,чтобы заполнить всю картинку
 
 				let addPicAmount = rowAmount*clickMany-PicAmount;
-
-				//console.log(wPic, hPic, rowAmount, addPicAmount);
 
 				for (let i=0; i<addPicAmount; i++) {
 					let newPic = justformePic.cloneNode(true);
@@ -74,7 +88,7 @@
 					justformePic.parentNode.appendChild(newPic);
 				};
 
-				let justformeAllPic = document.querySelectorAll('.justformepic');
+				justformeAllPic = document.querySelectorAll('.justformepic');
 				PicAmount = justformeAllPic.length;
 			// if (areaRatio > picturesRatio) {
 			// 	for (let i=0; i<justformeAllPic.length; i++) {
@@ -82,15 +96,47 @@
 			// 	}							
 			// } else {
 				for (let i=0; i<PicAmount; i++) {
- 					justformeAllPic[i].style.width = 100/clickMany+'%';
+ 					justformeAllPic[i].style.width = wPic+'px';//100/clickMany+'%';
 				}
 			//}
-				waterPictures.style.width = getComputedStyle(justformeAllPic[0]).width.slice(0,-2)*clickMany+'px';	
+				waterPictures.style.width = (+getComputedStyle(justformeAllPic[0]).width.slice(0,-2) + valMarginRight)*clickMany+'px';	
 				waterPictures.style.height = getComputedStyle(justformeAllPic[0]).height.slice(0,-2)*rowAmount+'px';
-		};
+		}
+
+
+		function pressInputX(e) {
+			let inputXval = inputX.value;
+
+			if (e.which == null) { // IE
+				if (e.keyCode < 48 || e.keyCode > 57 || +(inputXval + String.fromCharCode(e.keyCode)) > maxX) {
+					e.preventDefault(); 
+					// return
+				}
+			}
+			if (e.which != 0 && e.charCode != 0) {
+				if (e.which < 48 || e.which > 57 || +(inputXval + String.fromCharCode(e.which)) > maxX) {
+					e.preventDefault(); 
+					// return
+				}
+			}
+		}
+
+		function changeInputX(e) {
+			valMarginRight = +e.target.value;
+
+			for (let i=0; i<PicAmount; i++) {
+				justformeAllPic[i].style.marginRight = valMarginRight + 'px';
+				justformeAllPic[i].style.width = wPic + 'px';
+			};
+			// waterPictures.style.width = (+getComputedStyle(waterPictures).width.slice(0,-2) + valMarginRight*clickMany) + 'px';
+			waterPictures.style.width = (+getComputedStyle(justformeAllPic[0]).width.slice(0,-2) + valMarginRight)*clickMany +'px';	
+		}
 
 	setPosOne.addEventListener('click', oneClick);	
 	setPosMany.addEventListener('click', manyClick);
+
+	inputX.addEventListener('keypress', pressInputX);
+	inputX.addEventListener('input', changeInputX);
 
 })();
 
@@ -98,7 +144,7 @@
 //opacity
 (function(){
 
-	'use strict';
+	//'use strict';
 
 	let circlebutton = document.querySelector('.transparency__circlebutton'), 
 		line = document.querySelector('.transparency__line'),

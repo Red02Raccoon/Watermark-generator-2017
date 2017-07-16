@@ -478,6 +478,13 @@ html {
 :-ms-input-placeholder {
   color: #9eb2c0; }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none; }
+
+input[type='number'] {
+  -moz-appearance: textfield; }
+
 .wrapper {
   width: 100%;
   min-width: 960px;
@@ -671,6 +678,8 @@ html {
 .coordinates__input {
   width: 40px;
   height: 40px;
+  padding: 5px;
+  text-align: center;
   margin-right: 15px;
   border: 1px solid #9eb2c0;
   border-radius: 2px; }
