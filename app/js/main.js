@@ -22,17 +22,33 @@
 		maxX = 500, maxY = 500;
 
 
+		function init(e, picturesRatio, whatRemove, whatAdd){
+			e.preventDefault();	
+			wArea = +getComputedStyle(waterArea).width.slice(0,-2),
+			hArea = +getComputedStyle(waterArea).height.slice(0,-2),				
+			wPic = +getComputedStyle(justformePic).width.slice(0,-2),
+			hPic = +getComputedStyle(justformePic).height.slice(0,-2),
+			wAllPic = +getComputedStyle(waterPictures).width.slice(0,-2);
+
+			if (!picturesRatio) picturesRatio = hPic/wPic;
+
+			whatRemove.classList.remove('setposition__item-active');
+			whatAdd.classList.add('setposition__item-active');
+		};
+
 	//кликаем на one
 		let oneClick = function (e) {
-			e.preventDefault();	
 
-				wPic = getComputedStyle(justformePic).width.slice(0,-2),
-				hPic = getComputedStyle(justformePic).height.slice(0,-2);
+			init(e, picturesRatio, setPosMany, e.target);
+			// e.preventDefault();	
 
-				if (!picturesRatio) picturesRatio = hPic/wPic;
+				// wPic = getComputedStyle(justformePic).width.slice(0,-2),
+				// hPic = getComputedStyle(justformePic).height.slice(0,-2);
 
-				setPosMany.classList.remove('setposition__item-active');
-				e.target.classList.add('setposition__item-active');
+				// if (!picturesRatio) picturesRatio = hPic/wPic;
+
+				// setPosMany.classList.remove('setposition__item-active');
+				// e.target.classList.add('setposition__item-active');
 
 				clickMany = 1;
 				PicAmount = 1;
@@ -58,18 +74,21 @@
 
 	//кликаем на many
 		let manyClick = function (e) {
-			e.preventDefault();		
+			
+			init(e, picturesRatio, setPosOne, e.target);
+			// e.preventDefault();		
 
-				wArea = +getComputedStyle(waterArea).width.slice(0,-2),
-				hArea = +getComputedStyle(waterArea).height.slice(0,-2),				
-				wPic = +getComputedStyle(justformePic).width.slice(0,-2),
-				hPic = +getComputedStyle(justformePic).height.slice(0,-2),
-				wAllPic = +getComputedStyle(waterPictures).width.slice(0,-2);
+				// wArea = +getComputedStyle(waterArea).width.slice(0,-2),
+				// hArea = +getComputedStyle(waterArea).height.slice(0,-2),				
+				// wPic = +getComputedStyle(justformePic).width.slice(0,-2),
+				// hPic = +getComputedStyle(justformePic).height.slice(0,-2),
+				// wAllPic = +getComputedStyle(waterPictures).width.slice(0,-2);
 
-				if (!picturesRatio) picturesRatio = hPic/wPic;
+				// if (!picturesRatio) picturesRatio = hPic/wPic;
 
-				setPosOne.classList.remove('setposition__item-active');
-				e.target.classList.add('setposition__item-active');			
+				// setPosOne.classList.remove('setposition__item-active');
+				// e.target.classList.add('setposition__item-active');	
+
 				justformePic.style.height = '';
 				justformePic.style.width = '';	
 
