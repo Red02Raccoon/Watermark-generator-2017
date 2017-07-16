@@ -27,9 +27,9 @@
 			e.preventDefault();	
 
 				wPic = getComputedStyle(justformePic).width.slice(0,-2),
-				hPic = getComputedStyle(justformePic).height.slice(0,-2),
-				picturesRatio = hPic/wPic;
+				hPic = getComputedStyle(justformePic).height.slice(0,-2);
 
+				if (!picturesRatio) picturesRatio = hPic/wPic;
 
 				setPosMany.classList.remove('setposition__item-active');
 				e.target.classList.add('setposition__item-active');
@@ -64,9 +64,9 @@
 				hArea = +getComputedStyle(waterArea).height.slice(0,-2),				
 				wPic = +getComputedStyle(justformePic).width.slice(0,-2),
 				hPic = +getComputedStyle(justformePic).height.slice(0,-2),
-				wAllPic = +getComputedStyle(waterPictures).width.slice(0,-2),
-				//areaRatio = hArea/wArea,
-				picturesRatio = hPic/wPic;
+				wAllPic = +getComputedStyle(waterPictures).width.slice(0,-2);
+
+				if (!picturesRatio) picturesRatio = hPic/wPic;
 
 				setPosOne.classList.remove('setposition__item-active');
 				e.target.classList.add('setposition__item-active');			
@@ -74,9 +74,8 @@
 				justformePic.style.width = '';	
 
 				clickMany += 1;//колво кликов по many = кол-во водяных картинок в ширину
-console.log(wAllPic, valMarginRight, clickMany);
+
 				wPic = (wAllPic - valMarginRight*(clickMany-1))/clickMany;//новая ширина водяной картинки
-				//wPic = (wArea - valMarginRight/(clickMany-1))/ clickMany ;//новая ширина водяной картинки
 				hPic = wPic * picturesRatio;//новая высота водяной картинки
 				let rowAmount = hArea / hPic - Math.floor(hArea/hPic) > 0 ? Math.floor(hArea/hPic)+1 : Math.floor(hArea/hPic);//количество строк,чтобы заполнить всю картинку
 
@@ -123,6 +122,8 @@ console.log(wAllPic, valMarginRight, clickMany);
 
 		function changeInputX(e) {
 			valMarginRight = +e.target.value;
+
+console.log(PicAmount, wPic);
 
 			for (let i=0; i<PicAmount; i++) {
 				justformeAllPic[i].style.marginRight = valMarginRight + 'px';
