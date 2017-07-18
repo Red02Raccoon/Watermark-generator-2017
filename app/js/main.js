@@ -11,47 +11,75 @@
 		setPosMany = document.querySelector('.setposition__item-many'),
 		clickMany = 1, PicAmount = 1,
 		setPosOne = document.querySelector('.setposition__item-one'),
-		waterPictures = document.querySelector('.watermark__waterpictures'),
-		wArea = 0,		hArea = 0,
-		wAllPic = 0,
-		wPic = 0,		hPic = 0,
-		areaRatio = 0, 	picturesRatio = 0,
+		waterPictures = document.querySelector('.watermark__waterpictures'),		
 		inputX = document.querySelector('.coordinates__input-X'),
 		inputY = document.querySelector('.coordinates__input-Y'), 
 		valMarginRight = 0,
-		maxX = 500, maxY = 500;
+		maxX = 500, maxY = 500,
+		dimesions = {
+			wArea: 0, 
+			hArea: 0, 
+			areaRatio: 0,
 
+			wPic: 0, 
+			hPic: 0, 
+			pictureRatio: 0,
 
-		// function init(e, picturesRatio, whatRemove, whatAdd){
-		// 	e.preventDefault();	
-		// 	wArea = +getComputedStyle(waterArea).width.slice(0,-2),
-		// 	hArea = +getComputedStyle(waterArea).height.slice(0,-2),				
-		// 	wPic = +getComputedStyle(justformePic).width.slice(0,-2),
-		// 	hPic = +getComputedStyle(justformePic).height.slice(0,-2),
-		// 	wAllPic = +getComputedStyle(waterPictures).width.slice(0,-2);
+			wAllPic: 0, 
+			
 
-		// 	if (!picturesRatio) picturesRatio = hPic/wPic;
+			getDimension: function(prop, obj, dimension){
+				this[prop] = parseInt(getComputedStyle(obj)[dimension]);
+			},
 
-		// 	whatRemove.classList.remove('setposition__item-active');
-		// 	whatAdd.classList.add('setposition__item-active');
-		// };
+			//эти 2 метода повторяются, я потом придумаю че сделать
+			setPictureRatio: function(){
+				if (!this.pictureRatio) this.pictureRatio = this.hPic/this.wPic;;
+			},
+			setAreaRatio: function(){
+				if (!this.areaRatio) this.pictureRatio = this.hArea/this.wArea;;
+			},
+			//эти 2 метода повторяются, я потом придумаю че сделать
 
-	//кликаем на one
-		let oneClick = function (e) {
+			setNewWaterDimensions: function(clickMany){
+				this.wPic = (this.wAllPic - valMarginRight*(clickMany-1))/clickMany;	//новая ширина водяной картинки
+				this.hPic = this.wPic * this.pictureRatio;								//новая высота водяной картинки
+			}
+		};
+		
 
-			// init(e, picturesRatio, setPosMany, e.target);
+		function toggleActive(whatRemove, whatAdd){
+			whatRemove.classList.remove('setposition__item-active');
+			whatAdd.classList.add('setposition__item-active');	
+		}
+
+	//кликаем на one/many
+		let toggleOneMany = function (e) {
+
 			e.preventDefault();	
+			
+			dimesions.getDimension('wPic', justformePic, 'width');
+			dimesions.getDimension('hPic', justformePic, 'height');			
+			dimesions.getDimension('wArea', waterArea, 'width');
+			dimesions.getDimension('hArea', waterArea, 'height');			
+			dimesions.getDimension('wAllPic', waterPictures, 'width');
 
-				wPic = getComputedStyle(justformePic).width.slice(0,-2),
-				hPic = getComputedStyle(justformePic).height.slice(0,-2);
+			dimesions.setPictureRatio();
+			dimesions.setAreaRatio();	
+			
+			let whatClick = '';
 
-				if (!picturesRatio) picturesRatio = hPic/wPic;
+			if (this.classList.contains('setposition__item-one')) {
+				whatClick = 'one';		
+			} else
+			if (this.classList.contains('setposition__item-many')) {
+				whatClick = 'many';
+			}
 
-				setPosMany.classList.remove('setposition__item-active');
-				e.target.classList.add('setposition__item-active');
+			if (whatClick == 'one') {
+				toggleActive(setPosMany, e.target);	
 
-				clickMany = 1;
-				PicAmount = 1;
+				clickMany = 1; PicAmount = 1;
 				waterPictures.style.width = 100 +'%';	
 				waterPictures.style.height = 100 +'%';
 
@@ -60,44 +88,29 @@
 					justformePic.parentNode.removeChild(newPics[i]);
 				};
 
+				if (dimesions.areaRatio > dimesions.picturesRatio) {
+					justformePic.style.height = '100%';
+					justformePic.style.width = '';
+				} else {
+					justformePic.style.width = '100%';
+					justformePic.style.height = '';
+				};
 
-			if (areaRatio > picturesRatio) {
-				justformePic.style.height = '100%';
-				justformePic.style.width = '';
-			} else {
-				justformePic.style.width = '100%';
-				justformePic.style.height = '';
-			};
-				
-		}
-	
+			} else
 
-	//кликаем на many
-		let manyClick = function (e) {
-			
-			// init(e, picturesRatio, setPosOne, e.target);
-			e.preventDefault();		
-
-				wArea = +getComputedStyle(waterArea).width.slice(0,-2),
-				hArea = +getComputedStyle(waterArea).height.slice(0,-2),				
-				wPic = +getComputedStyle(justformePic).width.slice(0,-2),
-				hPic = +getComputedStyle(justformePic).height.slice(0,-2),
-				wAllPic = +getComputedStyle(waterPictures).width.slice(0,-2);
-
-				if (!picturesRatio) picturesRatio = hPic/wPic;
-
-				setPosOne.classList.remove('setposition__item-active');
-				e.target.classList.add('setposition__item-active');	
+			if (whatClick == 'many') {
+				toggleActive(setPosOne, e.target);	
 
 				justformePic.style.height = '';
 				justformePic.style.width = '';	
-
 				clickMany += 1;//колво кликов по many = кол-во водяных картинок в ширину
 
-				wPic = (wAllPic - valMarginRight*(clickMany-1))/clickMany;//новая ширина водяной картинки
-				hPic = wPic * picturesRatio;//новая высота водяной картинки
-				let rowAmount = hArea / hPic - Math.floor(hArea/hPic) > 0 ? Math.floor(hArea/hPic)+1 : Math.floor(hArea/hPic);//количество строк,чтобы заполнить всю картинку
+				dimesions.setNewWaterDimensions(clickMany);	
 
+				//количество строк,чтобы заполнить всю картинку
+				let rowAmount = dimesions.hArea / dimesions.hPic - Math.floor(dimesions.hArea/dimesions.hPic) > 0  
+														? Math.floor(dimesions.hArea/dimesions.hPic)+1 
+														: Math.floor(dimesions.hArea/dimesions.hPic);																
 				let addPicAmount = rowAmount*clickMany-PicAmount;
 
 				for (let i=0; i<addPicAmount; i++) {
@@ -108,18 +121,18 @@
 
 				justformeAllPic = document.querySelectorAll('.justformepic');
 				PicAmount = justformeAllPic.length;
-			// if (areaRatio > picturesRatio) {
-			// 	for (let i=0; i<justformeAllPic.length; i++) {
- 		// 			justformeAllPic[i].style.height = 100/clickMany+'%';
-			// 	}							
-			// } else {
+
 				for (let i=0; i<PicAmount; i++) {
- 					justformeAllPic[i].style.width = wPic+'px';//100/clickMany+'%';
+ 					justformeAllPic[i].style.width = dimesions.wPic+'px';
 				}
-			//}
+				//да, с этой хренью тоже надо что-то сделать потом
 				waterPictures.style.width = (+getComputedStyle(justformeAllPic[0]).width.slice(0,-2) + valMarginRight)*clickMany+'px';	
 				waterPictures.style.height = getComputedStyle(justformeAllPic[0]).height.slice(0,-2)*rowAmount+'px';
+				//да, с этой хренью тоже надо что-то сделать потом
+			}
+				
 		}
+	
 
 
 		function pressInputX(e) {
@@ -142,18 +155,15 @@
 		function changeInputX(e) {
 			valMarginRight = +e.target.value;
 
-console.log(PicAmount, wPic);
-
 			for (let i=0; i<PicAmount; i++) {
 				justformeAllPic[i].style.marginRight = valMarginRight + 'px';
 				justformeAllPic[i].style.width = wPic + 'px';
 			};
-			// waterPictures.style.width = (+getComputedStyle(waterPictures).width.slice(0,-2) + valMarginRight*clickMany) + 'px';
 			waterPictures.style.width = (+getComputedStyle(justformeAllPic[0]).width.slice(0,-2) + valMarginRight)*clickMany +'px';	
 		}
 
-	setPosOne.addEventListener('click', oneClick);	
-	setPosMany.addEventListener('click', manyClick);
+	setPosOne.addEventListener('click', toggleOneMany);	
+	setPosMany.addEventListener('click', toggleOneMany);	
 
 	inputX.addEventListener('keypress', pressInputX);
 	inputX.addEventListener('input', changeInputX);
