@@ -66,7 +66,7 @@
 
 			dimesions.setPictureRatio();
 			dimesions.setAreaRatio();	
-			
+
 			let whatClick = '';
 
 			if (this.classList.contains('setposition__item-one')) {
@@ -157,7 +157,7 @@
 
 			for (let i=0; i<PicAmount; i++) {
 				justformeAllPic[i].style.marginRight = valMarginRight + 'px';
-				justformeAllPic[i].style.width = wPic + 'px';
+				justformeAllPic[i].style.width = dimesions.wPic + 'px';
 			};
 			waterPictures.style.width = (+getComputedStyle(justformeAllPic[0]).width.slice(0,-2) + valMarginRight)*clickMany +'px';	
 		}
