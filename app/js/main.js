@@ -8,64 +8,77 @@
 	let justformePic = document.querySelector('.justformepic'),
 		justformeAllPic = document.querySelectorAll('.justformepic'),
 		waterArea = document.querySelector('.watermark__area'),
-		setPosMany = document.querySelector('.setposition__item-many'),
 		clickMany = 1, PicAmount = 1,
-		setPosOne = document.querySelector('.setposition__item-one'),
+		switchQuantity = document.querySelectorAll('.setposition__item'),
 		waterPictures = document.querySelector('.watermark__waterpictures'),		
 		inputX = document.querySelector('.coordinates__input-X'),
 		inputY = document.querySelector('.coordinates__input-Y'), 
 		valMarginRight = 0,
 		maxX = 500, maxY = 500,
+
 		dimesions = {
-			wArea: 0, 
-			hArea: 0, 
-			areaRatio: 0,
+			width: 0,
+			height: 0,
+			ratio: 0,
 
-			wPic: 0, 
-			hPic: 0, 
-			pictureRatio: 0,
-
-			wAllPic: 0, 
-			
-
-			getDimension: function(prop, obj, dimension){
-				this[prop] = parseInt(getComputedStyle(obj)[dimension]);
+			getDimension: function(obj, ...dimension){				
+				dimension.forEach((key,item) => {
+					this[key] = parseInt(getComputedStyle(obj)[dimension[item]]);					
+				})
 			},
 
-			//эти 2 метода повторяются, я потом придумаю че сделать
-			setPictureRatio: function(){
-				if (!this.pictureRatio) this.pictureRatio = this.hPic/this.wPic;;
+			setDimension: function(obj, dimensionsArr){
+				Object.keys(dimensionsArr).forEach(key => {
+					this[key] = parseInt(dimensionsArr[key]); 
+					obj.style[key] = this[key]+'px';								
+				})
 			},
-			setAreaRatio: function(){
-				if (!this.areaRatio) this.pictureRatio = this.hArea/this.wArea;;
-			},
-			//эти 2 метода повторяются, я потом придумаю че сделать
 
-			setNewWaterDimensions: function(clickMany){
-				this.wPic = (this.wAllPic - valMarginRight*(clickMany-1))/clickMany;	//новая ширина водяной картинки
-				this.hPic = this.wPic * this.pictureRatio;								//новая высота водяной картинки
-			}
+			removeDimension: function(obj, ...dimension){
+				dimension.forEach(key => {
+					obj.style[key] = '';								
+				})
+			},
+
+			getRatio: function(){
+				if (!this.ratio) this.ratio = this.height/this.width;
+			}			
+		},
+		
+		area = Object.create(dimesions),
+		waterPic = Object.create(dimesions),
+		allPic = Object.create(dimesions);
+
+		waterPic.setNewWaterDimensions = function(obj, clickMany){
+			this.width = (allPic.width - valMarginRight*(clickMany-1))/clickMany;	//новая ширина водяной картинки
+			this.height = this.width * this.ratio;									//новая высота водяной картинки
+			this.setDimension(obj, {'width': this.width, 'height': this.height});
 		};
 		
+		waterPic.countRows = function(obj, clickMany){//количество строк,чтобы заполнить всю картинку
+			return(area.height / this.height - Math.floor(area.height/this.height) > 0
+											? Math.floor(area.height/this.height)+1 
+											: Math.floor(area.height/this.height))
+		};
 
-		function toggleActive(whatRemove, whatAdd){
-			whatRemove.classList.remove('setposition__item-active');
+		function toggleActive(whatAdd){
+			let neighbors = whatAdd.parentNode.children;
+			[].forEach.call(neighbors, function(elem) {
+  				elem.classList.remove('setposition__item-active');
+			});							
 			whatAdd.classList.add('setposition__item-active');	
 		}
 
 	//кликаем на one/many
 		let toggleOneMany = function (e) {
 
-			e.preventDefault();	
-			
-			dimesions.getDimension('wPic', justformePic, 'width');
-			dimesions.getDimension('hPic', justformePic, 'height');			
-			dimesions.getDimension('wArea', waterArea, 'width');
-			dimesions.getDimension('hArea', waterArea, 'height');			
-			dimesions.getDimension('wAllPic', waterPictures, 'width');
+			e.preventDefault();				
 
-			dimesions.setPictureRatio();
-			dimesions.setAreaRatio();	
+			waterPic.getDimension(justformePic, 'height', 'width');
+			if (!waterPic.getRatio()) waterPic.getRatio();			
+			area.getDimension(waterArea, 'width', 'height');
+			if (!area.getRatio()) area.getRatio();
+			allPic.getDimension(waterPictures, 'width');
 
 			let whatClick = '';
 
@@ -77,40 +90,37 @@
 			}
 
 			if (whatClick == 'one') {
-				toggleActive(setPosMany, e.target);	
+				toggleActive(e.target);	
+
+				for (let i=1; i<PicAmount; i++) {
+					justformeAllPic[0].parentElement.removeChild(justformeAllPic[i]);
+				};
 
 				clickMany = 1; PicAmount = 1;
-				waterPictures.style.width = 100 +'%';	
-				waterPictures.style.height = 100 +'%';
 
-				let newPics = document.querySelectorAll('.justformepic-new');
-				for (let i=0; i<newPics.length; i++) {
-					justformePic.parentNode.removeChild(newPics[i]);
-				};
-
-				if (dimesions.areaRatio > dimesions.picturesRatio) {
-					justformePic.style.height = '100%';
-					justformePic.style.width = '';
+				if (area.ratio > waterPic.ratio) {
+					waterPic.removeDimension(justformePic, 'width');
+					waterPic.setDimension(justformePic, {'height': area.height});
+					waterPic.getDimension(justformePic, 'width');
 				} else {
-					justformePic.style.width = '100%';
-					justformePic.style.height = '';
+					waterPic.setDimension(justformePic, {'width': area.width});
+					waterPic.removeDimension(justformePic, 'height');
+					waterPic.getDimension(justformePic, 'height');					
 				};
+				allPic.setDimension(waterPictures, {'width': waterPic.width, 'height': waterPic.height});
 
 			} else
 
 			if (whatClick == 'many') {
-				toggleActive(setPosOne, e.target);	
+				toggleActive(e.target);	
 
-				justformePic.style.height = '';
-				justformePic.style.width = '';	
+				waterPic.removeDimension(justformePic, 'width', 'height');
+
 				clickMany += 1;//колво кликов по many = кол-во водяных картинок в ширину
 
-				dimesions.setNewWaterDimensions(clickMany);	
+				waterPic.setNewWaterDimensions(justformePic, clickMany);
 
-				//количество строк,чтобы заполнить всю картинку
-				let rowAmount = dimesions.hArea / dimesions.hPic - Math.floor(dimesions.hArea/dimesions.hPic) > 0  
-														? Math.floor(dimesions.hArea/dimesions.hPic)+1 
-														: Math.floor(dimesions.hArea/dimesions.hPic);																
+				let rowAmount = waterPic.countRows();
 				let addPicAmount = rowAmount*clickMany-PicAmount;
 
 				for (let i=0; i<addPicAmount; i++) {
@@ -123,31 +133,23 @@
 				PicAmount = justformeAllPic.length;
 
 				for (let i=0; i<PicAmount; i++) {
- 					justformeAllPic[i].style.width = dimesions.wPic+'px';
+					waterPic.setDimension(justformeAllPic[i], {'width': waterPic.width, 'height': waterPic.height});
 				}
-				//да, с этой хренью тоже надо что-то сделать потом
-				waterPictures.style.width = (+getComputedStyle(justformeAllPic[0]).width.slice(0,-2) + valMarginRight)*clickMany+'px';	
-				waterPictures.style.height = getComputedStyle(justformeAllPic[0]).height.slice(0,-2)*rowAmount+'px';
-				//да, с этой хренью тоже надо что-то сделать потом
-			}
-				
-		}
-	
+
+				let newWidthAll = (waterPic.width + valMarginRight)*clickMany;
+				let newHeightAll = (waterPic.height * rowAmount);
+
+				allPic.setDimension(waterPictures, {'width': newWidthAll, 'height': newHeightAll});
+			}				
+		}	
 
 
 		function pressInputX(e) {
 			let inputXval = inputX.value;
 
-			if (e.which == null) { // IE
-				if (e.keyCode < 48 || e.keyCode > 57 || +(inputXval + String.fromCharCode(e.keyCode)) > maxX) {
-					e.preventDefault(); 
-					// return
-				}
-			}
 			if (e.which != 0 && e.charCode != 0) {
 				if (e.which < 48 || e.which > 57 || +(inputXval + String.fromCharCode(e.which)) > maxX) {
 					e.preventDefault(); 
-					// return
 				}
 			}
 		}
@@ -159,11 +161,13 @@
 				justformeAllPic[i].style.marginRight = valMarginRight + 'px';
 				justformeAllPic[i].style.width = dimesions.wPic + 'px';
 			};
-			waterPictures.style.width = (+getComputedStyle(justformeAllPic[0]).width.slice(0,-2) + valMarginRight)*clickMany +'px';	
+
+			allPic.setDimension(waterPictures, {'width': (waterPic.width+ valMarginRight)*clickMany});
 		}
 
-	setPosOne.addEventListener('click', toggleOneMany);	
-	setPosMany.addEventListener('click', toggleOneMany);	
+	[].forEach.call(switchQuantity, function(domElem) {
+  				domElem.addEventListener('click', toggleOneMany);
+			});		
 
 	inputX.addEventListener('keypress', pressInputX);
 	inputX.addEventListener('input', changeInputX);
@@ -274,6 +278,5 @@
 	document.addEventListener('mouseup', buttonUp);
 	document.addEventListener('mousemove', buttonDrag);
 	line.addEventListener('click', lineClick);
-
 
 })();
